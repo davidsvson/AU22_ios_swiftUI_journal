@@ -1,0 +1,25 @@
+//
+//  Journal.swift
+//  SwiftUiJournal
+//
+//  Created by David Svensson on 2022-12-22.
+//
+
+import Foundation
+
+
+class Journal : ObservableObject {
+    @Published var entries = [JournalEntry]()
+    
+    
+    init() {
+        addMockData()
+    }
+    
+    func addMockData() {
+        entries.append(JournalEntry(content: "Åt mat"))
+        entries.append(JournalEntry(content: "Sov"))
+        entries.append(JournalEntry(content: "Programmerade"))
+        entries.append(JournalEntry(content: "Badade"))
+    }
+}
