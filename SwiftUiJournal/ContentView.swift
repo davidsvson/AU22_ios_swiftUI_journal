@@ -8,25 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var journal = Journal()
-    
+    //@StateObject var journal = Journal()
+    @EnvironmentObject var journal : Journal
     
     var body: some View {
         NavigationView {
             
             
-            List(journal.entries) { entry in
-                NavigationLink(destination: JournalEntryView(journal: journal, entry: entry) ){
-                    RowView(entry: entry)
+            List() {
+                ForEach(journal.entries) { entry in
+                    NavigationLink(destination: JournalEntryView( entry: entry) ){
+                        RowView(entry: entry)
+                    }
+                }
+                .onDelete() { indexSet in
+                    delete(indexSet: indexSet)
                 }
             }
             .navigationBarTitle("Journal")
-            .navigationBarItems(trailing: NavigationLink(destination: JournalEntryView(journal: journal)) {
+            .navigationBarItems(trailing: NavigationLink(destination: JournalEntryView()) {
                 Image(systemName: "plus.circle")
             })
         }
     }
+    
+    func delete(indexSet: IndexSet) {
+        journal.entries.remove(atOffsets: indexSet)
+    }
 }
+
+
 
 
 struct RowView : View {
