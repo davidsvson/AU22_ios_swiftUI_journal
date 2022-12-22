@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct JournalEntryView: View {
-   // var journal : Journal
+    // var journal : Journal
     @EnvironmentObject var journal : Journal
     var entry : JournalEntry? = nil
     @State var content : String = "Idag ..."

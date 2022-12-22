@@ -7,18 +7,23 @@
 
 import SwiftUI
 
+// gör en att göra app eller en shopinglist app
+
+
 struct ContentView: View {
     //@StateObject var journal = Journal()
     @EnvironmentObject var journal : Journal
+   
+   
     
     var body: some View {
         NavigationView {
             
             
             List() {
-                ForEach(journal.entries) { entry in
+                ForEach(Array(journal.entries.enumerated()), id: \.offset) { i, entry in
                     NavigationLink(destination: JournalEntryView( entry: entry) ){
-                        RowView(entry: entry)
+                        RowView(entry: entry, row: i)
                     }
                 }
                 .onDelete() { indexSet in
@@ -42,6 +47,7 @@ struct ContentView: View {
 
 struct RowView : View {
     var entry : JournalEntry
+    var row : Int
     
     var date : String {
         let dateFormatter = DateFormatter()
@@ -53,6 +59,8 @@ struct RowView : View {
     var body: some View {
         HStack {
             Text("\(date)")
+            Spacer()
+            Text("\(row)")
             Spacer()
             Text(entry.content.prefix(7) + "...")
         }
